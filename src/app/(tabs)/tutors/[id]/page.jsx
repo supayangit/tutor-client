@@ -1,5 +1,5 @@
 "use client";
-
+import { useSession } from "@/lib/auth-client";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { useParams } from "next/navigation";
@@ -22,13 +22,25 @@ const TutorDetailsPage = () => {
 
     const [loading, setLoading] = useState(true);
 
+    const [message, setMessage] = useState("");
+
+    const [bookingDisabled, setBookingDisabled] = useState(false);
+
+    const { data: session } = useSession();
+
+    // logged in user
+    const currentUser = {
+        email: session?.user?.email || "",
+        name: session?.user?.name || "",
+    };
+
     const [formData, setFormData] = useState({
         studentName: "",
         phone: "",
         tutorId: "",
-        tutorName: "",
-        studentEmail: "",
-        bookStatus: "Pending",
+        studentEmail: session?.user?.email || "",
+        studentName: session?.user?.name || "",
+        bookStatus: "Available",
     });
 
     useEffect(() => {
@@ -45,11 +57,51 @@ const TutorDetailsPage = () => {
 
                 setTutor(data);
 
+                // Current Date
+                const today = new Date();
+
+                // Tutor Session Date
+                const sessionDate = new Date(data.sessionDate);
+
+                // Remove time from today's date
+                today.setHours(0, 0, 0, 0);
+
+                // Slot Check
+                if (Number(data.totalSlot) <= 0) {
+
+                    setBookingDisabled(true);
+
+                    setMessage("No available slots left.");
+
+                    setFormData((prev) => ({
+                        ...prev,
+                        bookStatus: "Full",
+                    }));
+
+                }
+
+                // Session Date Check
+                else if (today < sessionDate) {
+
+                    setBookingDisabled(true);
+
+                    setMessage(
+                        "Booking is not available yet for this tutor"
+                    );
+
+                    setFormData((prev) => ({
+                        ...prev,
+                        bookStatus: "Unavailable",
+                    }));
+
+                }
+
                 setFormData((prev) => ({
                     ...prev,
                     tutorId: data._id,
                     tutorName: data.tutorName,
-                    studentEmail: "student@example.com", // Replace from auth context
+                    studentEmail: currentUser.email,
+                    studentName: currentUser.name,
                 }));
 
             } catch (error) {
@@ -85,20 +137,130 @@ const TutorDetailsPage = () => {
 
         e.preventDefault();
 
+        // Final Slot Check
+        if (Number(tutor.totalSlot) <= 0) {
+
+            setBookingDisabled(true);
+
+            setMessage(
+                "This session is fully booked. You can’t join at the moment."
+            );
+
+            setFormData((prev) => ({
+                ...prev,
+                bookStatus: "Full",
+            }));
+
+            return;
+
+        }
+
+        // Session Date Check
+        const today = new Date();
+
+        const sessionDate = new Date(tutor.sessionDate);
+
+        // Remove time from today's date
+        today.setHours(0, 0, 0, 0);
+
+        // Booking blocked before session date
+        if (today < sessionDate) {
+
+            setBookingDisabled(true);
+
+            setMessage(
+                "Booking is not available yet for this tutor"
+            );
+
+            setFormData((prev) => ({
+                ...prev,
+                bookStatus: "Unavailable",
+            }));
+
+            return;
+
+        }
+
         const bookingData = {
             ...formData,
         };
 
-        console.log(bookingData);
+        try {
 
-        // POST booking data
-        // await fetch("http://localhost:5000/bookings", {
-        //     method: "POST",
-        //     headers: {
-        //         "Content-Type": "application/json",
-        //     },
-        //     body: JSON.stringify(bookingData),
-        // });
+            // Save booking
+            const bookingRes = await fetch(
+                "http://localhost:5000/bookings",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(bookingData),
+                }
+            );
+
+            const bookingResult = await bookingRes.json();
+
+            if (bookingResult.insertedId) {
+
+                // Decrease Slot by 1
+                const updatedSlot = Number(tutor.totalSlot) - 1;
+
+                // Update tutor slot in database
+                await fetch(
+                    `http://localhost:5000/tutors/${tutor._id}`,
+                    {
+                        method: "PATCH",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                            totalSlot: updatedSlot,
+                        }),
+                    }
+                );
+
+                // Update UI instantly
+                setTutor((prev) => ({
+                    ...prev,
+                    totalSlot: updatedSlot,
+                }));
+
+                // Update Booking Status
+                setFormData((prev) => ({
+                    ...prev,
+                    bookStatus: "Booked",
+                }));
+
+                // If slot becomes 0
+                if (updatedSlot <= 0) {
+
+                    setBookingDisabled(true);
+
+                    setMessage(
+                        "This session is fully booked. You can’t join at the moment."
+                    );
+
+                    setFormData((prev) => ({
+                        ...prev,
+                        bookStatus: "Full",
+                    }));
+
+                } else {
+
+                    setMessage("Booking successful!");
+
+                }
+
+            }
+
+        } catch (error) {
+
+            console.error(error);
+
+            setMessage("Something went wrong!");
+
+        }
 
     };
 
@@ -258,61 +420,6 @@ const TutorDetailsPage = () => {
 
                         </div>
 
-                        <div className="flex items-start gap-4 p-5 rounded-2xl bg-violet-50">
-
-                            <GraduationCap className="w-6 h-6 text-violet-600 mt-1" />
-
-                            <div>
-
-                                <p className="text-sm text-gray-500">
-                                    Institution
-                                </p>
-
-                                <h3 className="font-bold text-lg text-gray-900">
-                                    {tutor.institution || "Not Provided"}
-                                </h3>
-
-                            </div>
-
-                        </div>
-
-                        <div className="flex items-start gap-4 p-5 rounded-2xl bg-violet-50">
-
-                            <MonitorSmartphone className="w-6 h-6 text-violet-600 mt-1" />
-
-                            <div>
-
-                                <p className="text-sm text-gray-500">
-                                    Teaching Mode
-                                </p>
-
-                                <h3 className="font-bold text-lg text-gray-900">
-                                    {tutor.teachingMode}
-                                </h3>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                    {/* Experience */}
-                    <div className="mt-8 p-6 rounded-2xl bg-violet-50">
-
-                        <div className="flex items-center gap-3 mb-4">
-
-                            <BookOpen className="w-6 h-6 text-violet-600" />
-
-                            <h2 className="text-2xl font-bold text-gray-900">
-                                Experience
-                            </h2>
-
-                        </div>
-
-                        <p className="text-gray-700 leading-relaxed">
-                            {tutor.experience}
-                        </p>
-
                     </div>
 
                 </div>
@@ -329,6 +436,18 @@ const TutorDetailsPage = () => {
                         </h2>
 
                     </div>
+
+                    {/* MESSAGE */}
+                    {message && (
+                        <div
+                            className={`mb-5 px-4 py-3 rounded-xl text-sm font-medium ${bookingDisabled
+                                ? "bg-red-100 text-red-600"
+                                : "bg-green-100 text-green-700"
+                                }`}
+                        >
+                            {message}
+                        </div>
+                    )}
 
                     <form
                         onSubmit={handleSubmit}
@@ -440,9 +559,15 @@ const TutorDetailsPage = () => {
                         {/* Submit */}
                         <button
                             type="submit"
-                            className="w-full py-4 rounded-2xl bg-violet-600 hover:bg-violet-700 text-white font-bold text-lg transition-all duration-300"
+                            disabled={bookingDisabled}
+                            className={`w-full py-4 rounded-2xl text-white font-bold text-lg transition-all duration-300 ${bookingDisabled
+                                ? "bg-gray-400 cursor-not-allowed"
+                                : "bg-violet-600 hover:bg-violet-700"
+                                }`}
                         >
-                            Confirm Booking
+                            {bookingDisabled
+                                ? "Booking Unavailable"
+                                : "Confirm Booking"}
                         </button>
 
                     </form>
