@@ -46,6 +46,7 @@ const AddTutorPage = () => {
         ...formData,
 
         // extra useful fields
+        created_by: session?.user?.id,
         tutorEmail: session?.user?.email,
         tutorCreatorName: session?.user?.name,
         createdAt: new Date().toISOString(),
