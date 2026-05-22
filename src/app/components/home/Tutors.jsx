@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import Link from "next/link";
 
 import {
     MapPin,
@@ -138,11 +139,12 @@ const TutorsSection = () => {
 
                             </div>
 
-                            <button className="w-full bg-violet-600 hover:bg-violet-700 text-white rounded-xl py-3 font-medium transition">
-
+                            <Link
+                                href={`/tutors/${tutor._id}`}
+                                className="px-5 py-2.5 rounded-xl bg-violet-600 text-white font-medium hover:bg-violet-700 transition"
+                            >
                                 Book Session
-
-                            </button>
+                            </Link>
 
                         </div>
 

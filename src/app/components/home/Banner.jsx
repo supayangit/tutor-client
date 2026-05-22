@@ -2,14 +2,21 @@
 
 import React, { useState, useEffect, useCallback } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import Link from "next/link";
 
 const slides = [
     {
         headline: "Book Expert Tutors Effortlessly",
         subtext:
             "Connect with skilled tutors, schedule personalized sessions, and learn smarter with MediQueue.",
-        cta1: "Browse Tutors",
-        cta2: "Become a Tutor",
+        cta1: {
+            text: "Browse Tutors",
+            href: "/tutors",
+        },
+        cta2: {
+            text: "Become a Tutor",
+            href: "/add-tutor",
+        },
         image:
             "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&h=600&fit=crop",
     },
@@ -17,8 +24,14 @@ const slides = [
         headline: "Flexible Learning for Every Student",
         subtext:
             "Choose online or offline sessions that fit your schedule perfectly.",
-        cta1: "Explore Sessions",
-        cta2: "Learn More",
+        cta1: {
+            text: "Explore Sessions",
+            href: "/sessions",
+        },
+        cta2: {
+            text: "Learn More",
+            href: "/learn-more",
+        },
         image:
             "https://images.unsplash.com/photo-1531482615713-2afd69097998?w=800&h=600&fit=crop",
     },
@@ -26,8 +39,14 @@ const slides = [
         headline: "Smarter Scheduling, Better Learning",
         subtext:
             "Prevent conflicts and manage sessions with ease.",
-        cta1: "Get Started",
-        cta2: "How It Works",
+        cta1: {
+            text: "Get Started",
+            href: "/get-started",
+        },
+        cta2: {
+            text: "How It Works",
+            href: "/how-it-works",
+        },
         image:
             "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&h=600&fit=crop",
     },
@@ -92,13 +111,17 @@ const Banner = () => {
                         {/* Buttons */}
                         <div className="flex flex-col sm:flex-row gap-4">
 
-                            <button className="bg-gradient-to-r from-violet-500 to-purple-600 hover:from-violet-600 hover:to-purple-700 text-white shadow-xl shadow-violet-500/25 rounded-xl px-8 py-4 text-base font-medium transition">
-                                {slides[currentSlide].cta1}
-                            </button>
+                            <Link href={slides[currentSlide].cta1.href}>
+                                <button className="bg-gradient-to-r from-violet-500 to-purple-600 hover:from-violet-600 hover:to-purple-700 text-white shadow-xl shadow-violet-500/25 rounded-xl px-8 py-4 text-base font-medium transition">
+                                    {slides[currentSlide].cta1.text}
+                                </button>
+                            </Link>
 
+                            <Link href={slides[currentSlide].cta2.href}>
                             <button className="border-2 border-violet-300 text-violet-700 hover:bg-violet-50 rounded-xl px-8 py-4 text-base font-medium transition">
-                                {slides[currentSlide].cta2}
+                                {slides[currentSlide].cta2.text}
                             </button>
+                            </Link>
 
                         </div>
 
@@ -119,8 +142,8 @@ const Banner = () => {
                                         key={index}
                                         onClick={() => setCurrentSlide(index)}
                                         className={`h-2 rounded-full transition-all duration-300 ${index === currentSlide
-                                                ? "w-8 bg-gradient-to-r from-violet-500 to-purple-600"
-                                                : "w-2 bg-violet-200 hover:bg-violet-300"
+                                            ? "w-8 bg-gradient-to-r from-violet-500 to-purple-600"
+                                            : "w-2 bg-violet-200 hover:bg-violet-300"
                                             }`}
                                     />
                                 ))}
