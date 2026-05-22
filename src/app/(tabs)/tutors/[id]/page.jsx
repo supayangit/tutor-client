@@ -32,14 +32,16 @@ const TutorDetailsPage = () => {
     const currentUser = {
         email: session?.user?.email || "",
         name: session?.user?.name || "",
+        id: session?.user?.id || "",
     };
 
     const [formData, setFormData] = useState({
-        studentName: "",
+        tutorName: "",
         phone: "",
         tutorId: "",
         studentEmail: session?.user?.email || "",
         studentName: session?.user?.name || "",
+        studentId: session?.user?.id || "",
         bookStatus: "Available",
     });
 
@@ -98,6 +100,7 @@ const TutorDetailsPage = () => {
 
                 setFormData((prev) => ({
                     ...prev,
+                    studentId: currentUser.id,               
                     tutorId: data._id,
                     tutorName: data.tutorName,
                     studentEmail: currentUser.email,
