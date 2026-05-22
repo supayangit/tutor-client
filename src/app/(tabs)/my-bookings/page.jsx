@@ -33,7 +33,7 @@ const MySessionsPage = () => {
                 if (!session?.user?.id) return;
 
                 const res = await fetch(
-                    `http://localhost:5000/bookings/student/${session.user.id}`
+                    `${process.env.NEXT_PUBLIC_API_URL}/student/${session.user.id}`
                 );
 
                 const data = await res.json();

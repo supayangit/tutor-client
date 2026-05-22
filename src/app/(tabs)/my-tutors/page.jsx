@@ -40,7 +40,7 @@ const MyTutorsPage = () => {
                 if (!session?.user?.id) return;
 
                 const res = await fetch(
-                    `http://localhost:5000/my-tutors?userId=${session.user.id}`
+                    `${process.env.NEXT_PUBLIC_API_URL}/my-tutors?userId=${session.user.id}`
                 );
 
                 const data = await res.json();

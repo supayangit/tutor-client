@@ -20,7 +20,7 @@ const TutorsSection = () => {
 
             try {
 
-                const res = await fetch("http://localhost:5000/available-tutors");
+                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/available-tutors`);
                 const data = await res.json();
 
                 setTutors(data);

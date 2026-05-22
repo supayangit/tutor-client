@@ -49,7 +49,7 @@ export const useBooking = ({ tutor, session }) => {
 
         const bookingData = { ...formData };
 
-        const res = await fetch("http://localhost:5000/bookings", {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/bookings`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(bookingData),
@@ -60,7 +60,7 @@ export const useBooking = ({ tutor, session }) => {
         // decrease slot
         const updatedSlot = Number(tutor.totalSlot) - 1;
 
-        await fetch(`http://localhost:5000/tutors/${tutor._id}`, {
+        await fetch(`${process.env.NEXT_PUBLIC_API_URL}/tutors/${tutor._id}`, {
             method: "PATCH",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ totalSlot: updatedSlot }),
