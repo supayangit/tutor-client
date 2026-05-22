@@ -1,18 +1,9 @@
 "use client";
 import { useSession } from "@/lib/auth-client";
+import TutorDetails from "@/app/components/tutor/TutorDetails";
 import React, { useEffect, useState } from "react";
-import Image from "next/image";
 import { useParams } from "next/navigation";
-import {
-    BookOpen,
-    Clock3,
-    MapPin,
-    Wallet,
-    MonitorSmartphone,
-    CalendarDays,
-    GraduationCap,
-    BadgeCheck,
-} from "lucide-react";
+import { BadgeCheck } from "lucide-react";
 
 const TutorDetailsPage = () => {
 
@@ -306,126 +297,7 @@ const TutorDetailsPage = () => {
             <div className="max-w-7xl mx-auto grid lg:grid-cols-3 gap-8">
 
                 {/* LEFT SIDE */}
-                <div className="lg:col-span-2 bg-white rounded-3xl border border-violet-100 shadow-lg p-8">
-
-                    {/* Header */}
-                    <div className="flex flex-col md:flex-row md:items-center gap-6 mb-10">
-
-                        <div className="relative w-32 h-32 rounded-3xl overflow-hidden border-4 border-violet-100">
-
-                            <Image
-                                src={tutor.photo}
-                                alt={tutor.tutorName}
-                                fill
-                                className="object-cover"
-                            />
-
-                        </div>
-
-                        <div>
-
-                            <h1 className="text-4xl font-extrabold text-gray-900 mb-2">
-                                {tutor.tutorName}
-                            </h1>
-
-                            <p className="text-xl text-violet-600 font-semibold mb-4">
-                                {tutor.subject} Tutor
-                            </p>
-
-                            <div className="flex flex-wrap gap-3">
-
-                                <span className="px-4 py-2 bg-violet-100 text-violet-700 rounded-xl text-sm font-medium">
-                                    {tutor.teachingMode}
-                                </span>
-
-                                <span className="px-4 py-2 bg-emerald-100 text-emerald-700 rounded-xl text-sm font-medium">
-                                    {tutor.totalSlot} Slots Available
-                                </span>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                    {/* Info Grid */}
-                    <div className="grid sm:grid-cols-2 gap-6">
-
-                        <div className="flex items-start gap-4 p-5 rounded-2xl bg-violet-50">
-
-                            <Wallet className="w-6 h-6 text-violet-600 mt-1" />
-
-                            <div>
-
-                                <p className="text-sm text-gray-500">
-                                    Hourly Fee
-                                </p>
-
-                                <h3 className="font-bold text-lg text-gray-900">
-                                    {tutor.hourlyFee}
-                                </h3>
-
-                            </div>
-
-                        </div>
-
-                        <div className="flex items-start gap-4 p-5 rounded-2xl bg-violet-50">
-
-                            <Clock3 className="w-6 h-6 text-violet-600 mt-1" />
-
-                            <div>
-
-                                <p className="text-sm text-gray-500">
-                                    Available Time
-                                </p>
-
-                                <h3 className="font-bold text-lg text-gray-900">
-                                    {tutor.availableTime}
-                                </h3>
-
-                            </div>
-
-                        </div>
-
-                        <div className="flex items-start gap-4 p-5 rounded-2xl bg-violet-50">
-
-                            <CalendarDays className="w-6 h-6 text-violet-600 mt-1" />
-
-                            <div>
-
-                                <p className="text-sm text-gray-500">
-                                    Available Days
-                                </p>
-
-                                <h3 className="font-bold text-lg text-gray-900">
-                                    {tutor.availableDays}
-                                </h3>
-
-                            </div>
-
-                        </div>
-
-                        <div className="flex items-start gap-4 p-5 rounded-2xl bg-violet-50">
-
-                            <MapPin className="w-6 h-6 text-violet-600 mt-1" />
-
-                            <div>
-
-                                <p className="text-sm text-gray-500">
-                                    Location
-                                </p>
-
-                                <h3 className="font-bold text-lg text-gray-900">
-                                    {tutor.location}
-                                </h3>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </div>
+                <TutorDetails tutor={tutor} />
 
                 {/* BOOK SESSION */}
                 <div className="bg-white rounded-3xl border border-violet-100 shadow-lg p-8 h-fit sticky top-10">
