@@ -26,7 +26,7 @@ const slides = [
             "Choose online or offline sessions that fit your schedule perfectly.",
         cta1: {
             text: "Explore Sessions",
-            href: "/sessions",
+            href: "/my-bookings",
         },
         cta2: {
             text: "Learn More",
@@ -41,7 +41,7 @@ const slides = [
             "Prevent conflicts and manage sessions with ease.",
         cta1: {
             text: "Get Started",
-            href: "/get-started",
+            href: "/signup",
         },
         cta2: {
             text: "How It Works",

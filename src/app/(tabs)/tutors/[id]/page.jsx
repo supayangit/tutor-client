@@ -183,7 +183,7 @@ const TutorDetailsPage = () => {
 
             // Save booking
             const bookingRes = await fetch(
-                "http://localhost:5000/bookings",
+                `${process.env.NEXT_PUBLIC_API_URL}/bookings`,
                 {
                     method: "POST",
                     headers: {
@@ -202,7 +202,7 @@ const TutorDetailsPage = () => {
 
                 // Update tutor slot in database
                 await fetch(
-                    `http://localhost:5000/tutors/${tutor._id}`,
+                    `${process.env.NEXT_PUBLIC_API_URL}/${tutor._id}`,
                     {
                         method: "PATCH",
                         headers: {

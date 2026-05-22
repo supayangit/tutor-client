@@ -33,7 +33,7 @@ const MySessionsPage = () => {
                 if (!session?.user?.id) return;
 
                 const res = await fetch(
-                    `${process.env.NEXT_PUBLIC_API_URL}/student/${session.user.id}`
+                    `${process.env.NEXT_PUBLIC_API_URL}/bookings/student/${session.user.id}`
                 );
 
                 const data = await res.json();
@@ -76,7 +76,7 @@ const MySessionsPage = () => {
             setCancelLoading(selectedBookingId);
 
             const res = await fetch(
-                `http://localhost:5000/bookings/${selectedBookingId}`,
+                `${process.env.NEXT_PUBLIC_API_URL}/bookings/${selectedBookingId}`,
                 {
                     method: "PATCH",
                     headers: {
