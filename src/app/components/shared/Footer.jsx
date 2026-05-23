@@ -12,7 +12,7 @@ import { HiOutlineAcademicCap } from "react-icons/hi";
 
 const Footer = () => {
     return (
-        <footer className="border-t border-violet-100 bg-gradient-to-b from-white to-violet-50/40">
+        <footer className="border-t border-violet-100 dark:border-gray-800 bg-gradient-to-b from-white to-violet-50/40 dark:from-gray-950 dark:to-gray-900">
 
             <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-10 lg:px-20 py-14 grid grid-cols-1 md:grid-cols-2 gap-12">
 
@@ -24,23 +24,23 @@ const Footer = () => {
                         href="/"
                         className="flex items-center gap-3 group w-fit"
                     >
-                        <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-violet-600 to-purple-500 flex items-center justify-center shadow-lg shadow-violet-200 transition group-hover:scale-105">
+                        <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-violet-600 to-purple-500 flex items-center justify-center shadow-lg shadow-violet-200 dark:shadow-violet-900/20 transition group-hover:scale-105">
                             <HiOutlineAcademicCap className="text-white text-2xl" />
                         </div>
 
                         <div>
-                            <h2 className="text-xl font-bold tracking-tight text-gray-900">
+                            <h2 className="text-xl font-bold tracking-tight text-gray-900 dark:text-white">
                                 MediQueue
                             </h2>
 
-                            <p className="text-[11px] text-violet-600 font-medium -mt-0.5">
+                            <p className="text-[11px] text-violet-600 dark:text-violet-400 font-medium -mt-0.5">
                                 Smart Tutor Booking
                             </p>
                         </div>
                     </Link>
 
                     {/* Description */}
-                    <p className="text-sm leading-relaxed text-gray-600 max-w-md">
+                    <p className="text-sm leading-relaxed text-gray-600 dark:text-gray-300 max-w-md">
                         Simplifying tutor booking with organized scheduling,
                         smarter learning sessions, and seamless student-tutor connections.
                     </p>
@@ -50,21 +50,21 @@ const Footer = () => {
 
                         <Link
                             href="#"
-                            className="w-10 h-10 rounded-xl bg-white border border-violet-100 flex items-center justify-center text-violet-600 hover:bg-violet-600 hover:text-white transition shadow-sm"
+                            className="w-10 h-10 rounded-xl bg-white dark:bg-gray-800 border border-violet-100 dark:border-gray-700 flex items-center justify-center text-violet-600 dark:text-violet-400 hover:bg-violet-600 hover:text-white transition shadow-sm"
                         >
                             <FaFacebookF />
                         </Link>
 
                         <Link
                             href="#"
-                            className="w-10 h-10 rounded-xl bg-white border border-violet-100 flex items-center justify-center text-violet-600 hover:bg-violet-600 hover:text-white transition shadow-sm"
+                            className="w-10 h-10 rounded-xl bg-white dark:bg-gray-800 border border-violet-100 dark:border-gray-700 flex items-center justify-center text-violet-600 dark:text-violet-400 hover:bg-violet-600 hover:text-white transition shadow-sm"
                         >
                             <FaInstagram />
                         </Link>
 
                         <Link
                             href="#"
-                            className="w-10 h-10 rounded-xl bg-white border border-violet-100 flex items-center justify-center text-violet-600 hover:bg-violet-600 hover:text-white transition shadow-sm"
+                            className="w-10 h-10 rounded-xl bg-white dark:bg-gray-800 border border-violet-100 dark:border-gray-700 flex items-center justify-center text-violet-600 dark:text-violet-400 hover:bg-violet-600 hover:text-white transition shadow-sm"
                         >
                             <FaTelegramPlane />
                         </Link>
@@ -80,28 +80,28 @@ const Footer = () => {
 
                         <Link
                             href="/tutors"
-                            className="block text-gray-600 hover:text-violet-600 transition"
+                            className="block text-gray-600 dark:text-gray-300 hover:text-violet-600 dark:hover:text-violet-400 transition"
                         >
                             Browse Tutors
                         </Link>
 
                         <Link
                             href="/add-tutor"
-                            className="block text-gray-600 hover:text-violet-600 transition"
+                            className="block text-gray-600 dark:text-gray-300 hover:text-violet-600 dark:hover:text-violet-400 transition"
                         >
                             Become a Tutor
                         </Link>
 
                         <Link
                             href="/contact"
-                            className="block text-gray-600 hover:text-violet-600 transition"
+                            className="block text-gray-600 dark:text-gray-300 hover:text-violet-600 dark:hover:text-violet-400 transition"
                         >
                             Contact
                         </Link>
 
                         <Link
                             href="/terms"
-                            className="block text-gray-600 hover:text-violet-600 transition"
+                            className="block text-gray-600 dark:text-gray-300 hover:text-violet-600 dark:hover:text-violet-400 transition"
                         >
                             Terms & Privacy
                         </Link>
@@ -109,7 +109,7 @@ const Footer = () => {
                     </div>
 
                     {/* Copyright */}
-                    <div className="mt-10 md:text-right text-sm text-gray-500">
+                    <div className="mt-10 md:text-right text-sm text-gray-500 dark:text-gray-400">
                         © 2026 MediQueue <br />
                         Crafted by Supayan C.
                     </div>

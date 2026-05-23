@@ -7,6 +7,8 @@ import Navbar from "./Navbar";
 import { authClient } from "@/lib/auth-client";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { HiOutlineAcademicCap } from "react-icons/hi";
+import { useTheme } from "next-themes";
+import { Sun, Moon } from "lucide-react";
 
 const Header = () => {
   const { data: session, isPending } = authClient.useSession();
@@ -15,6 +17,13 @@ const Header = () => {
   const [profileOpen, setProfileOpen] = useState(false);
 
   const headerRef = useRef(null);
+
+  const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const closeMenu = () => {
     setMenuOpen(false);
@@ -69,7 +78,13 @@ const Header = () => {
   return (
     <header
       ref={headerRef}
-      className="w-full sticky top-0 z-50 border-b border-violet-100 bg-white/80 backdrop-blur-xl"
+      className="
+    w-full sticky top-0 z-50
+    border-b border-violet-100 dark:border-gray-800
+    bg-white/80 dark:bg-gray-950/80
+    backdrop-blur-xl
+    transition-colors duration-300
+  "
     >
       <div className="mx-auto max-w-7xl px-4 md:px-6 lg:px-10 py-4 flex items-center justify-between">
         {/* =========================
@@ -83,14 +98,34 @@ const Header = () => {
             <HiOutlineAcademicCap className="text-white text-2xl" />
           </div>
 
-          <div>
-            <h1 className="text-xl font-bold tracking-tight text-gray-900">
-              MediQueue
-            </h1>
+          <div className="flex items-center gap-3">
 
-            <p className="text-[11px] text-violet-600 font-medium -mt-0.5">
-              Smart Tutor Booking
-            </p>
+            <div>
+              <h1 className="text-xl font-bold tracking-tight text-gray-900 dark:text-white">
+                MediQueue
+              </h1>
+
+              <p className="text-[11px] text-violet-600 font-medium -mt-0.5">
+                Smart Tutor Booking
+              </p>
+            </div>
+
+            {/* THEME TOGGLE */}
+            {mounted && (
+              <button
+                onClick={() =>
+                  setTheme(theme === "dark" ? "light" : "dark")
+                }
+                className="w-10 h-10 rounded-xl border border-violet-200 dark:border-gray-700 flex items-center justify-center bg-white dark:bg-gray-900 hover:scale-105 transition"
+              >
+                {theme === "dark" ? (
+                  <Sun className="w-5 h-5 text-yellow-400" />
+                ) : (
+                  <Moon className="w-5 h-5 text-violet-700" />
+                )}
+              </button>
+            )}
+
           </div>
         </Link>
 
@@ -214,50 +249,50 @@ const Header = () => {
         </div>
       </div>
 
-     {/* =========================
+      {/* =========================
     MOBILE MENU
 ========================= */}
-<div
-  className={`
+      <div
+        className={`
     md:hidden fixed left-0 right-0 top-[72px] z-40
     bg-white border-t border-violet-100 shadow-2xl
     transition-all duration-200 ease-out
     ${menuOpen ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-2 pointer-events-none"}
   `}
->
-  <div className="px-5 py-5 space-y-5">
-    
-    <Navbar
-      mobile
-      session={session}
-      closeMenu={closeMenu}
-    />
+      >
+        <div className="px-5 py-5 space-y-5">
 
-    <div className="pt-2">
-      {session?.user ? (
-        <button
-          onClick={() => {
-            handleSignOut();
-            closeMenu();
-          }}
-          className="w-full py-3 rounded-xl bg-violet-50 text-violet-700 font-medium hover:bg-violet-100 transition"
-        >
-          Logout
-        </button>
-      ) : (
-        <Link
-          href="/signin"
-          onClick={closeMenu}
-          className="block text-center py-3 rounded-xl bg-violet-600 text-white font-medium hover:bg-violet-700 transition"
-        >
-          Sign In
-        </Link>
-      )}
-    </div>
+          <Navbar
+            mobile
+            session={session}
+            closeMenu={closeMenu}
+          />
 
-  </div>
-</div>
-      
+          <div className="pt-2">
+            {session?.user ? (
+              <button
+                onClick={() => {
+                  handleSignOut();
+                  closeMenu();
+                }}
+                className="w-full py-3 rounded-xl bg-violet-50 text-violet-700 font-medium hover:bg-violet-100 transition"
+              >
+                Logout
+              </button>
+            ) : (
+              <Link
+                href="/signin"
+                onClick={closeMenu}
+                className="block text-center py-3 rounded-xl bg-violet-600 text-white font-medium hover:bg-violet-700 transition"
+              >
+                Sign In
+              </Link>
+            )}
+          </div>
+
+        </div>
+      </div>
+
     </header>
   );
 };

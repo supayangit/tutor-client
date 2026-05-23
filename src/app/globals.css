@@ -1,10 +1,111 @@
 @import "tailwindcss";
 @import "@heroui/styles"; 
 
+
+html.dark {
+  background-color: #0f172a;
+}
+
+html.dark body {
+  background-color: #0f172a;
+  color: white;
+}
+
+/* MAIN BACKGROUNDS */
+html.dark .bg-white {
+  background-color: #111827 !important;
+}
+
+html.dark .bg-violet-50 {
+  background-color: #1e293b !important;
+}
+
+html.dark .bg-purple-50 {
+  background-color: #1e293b !important;
+}
+
+html.dark .bg-gray-100 {
+  background-color: #1f2937 !important;
+}
+
+/* GRADIENT FIXES */
+html.dark .from-violet-50,
+html.dark .via-white,
+html.dark .to-purple-50 {
+  --tw-gradient-from: #0f172a !important;
+  --tw-gradient-via: #111827 !important;
+  --tw-gradient-to: #0f172a !important;
+}
+
+/* TEXT COLORS */
+html.dark .text-gray-900 {
+  color: white !important;
+}
+
+html.dark .text-gray-800 {
+  color: #f3f4f6 !important;
+}
+
+html.dark .text-gray-700 {
+  color: #e5e7eb !important;
+}
+
+html.dark .text-gray-600 {
+  color: #d1d5db !important;
+}
+
+html.dark .text-gray-500 {
+  color: #9ca3af !important;
+}
+
+/* BORDERS */
+html.dark .border-violet-100 {
+  border-color: #374151 !important;
+}
+
+html.dark .border-violet-200 {
+  border-color: #4b5563 !important;
+}
+
+html.dark .border-gray-200 {
+  border-color: #374151 !important;
+}
+
+/* INPUTS */
+html.dark input,
+html.dark textarea,
+html.dark select {
+  background-color: #111827 !important;
+  color: white !important;
+  border-color: #374151 !important;
+}
+
+/* PLACEHOLDERS */
+html.dark input::placeholder,
+html.dark textarea::placeholder {
+  color: #9ca3af !important;
+}
+
+/* SHADOWS */
+html.dark .shadow-lg,
+html.dark .shadow-xl,
+html.dark .shadow-2xl {
+  box-shadow: 0 0 0 transparent !important;
+}
+
+/* CARDS */
+html.dark .rounded-2xl,
+html.dark .rounded-3xl {
+  background-color: #111827;
+}
+
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
 }
+
+@custom-variant dark (&:where(.dark, .dark *));
 
 @theme inline {
   --color-background: var(--background);
