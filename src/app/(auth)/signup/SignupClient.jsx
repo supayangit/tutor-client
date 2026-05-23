@@ -325,7 +325,7 @@ const SignupPage = () => {
           {/* GOOGLE LOGIN */}
           <Button
             onClick={handleGoogleSignIn}
-            className="bg-white hover:bg-violet-50 text-black border border-violet-200 flex items-center justify-center gap-2 w-full py-2"
+            className="bg-white hover:bg-violet-50 text-black dark:text-white dark:hover:bg-gray-800 border border-violet-200 flex items-center justify-center gap-2 w-full py-2"
           >
 
             <FaGoogle className="text-violet-500" />

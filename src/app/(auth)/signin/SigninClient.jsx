@@ -88,6 +88,53 @@ const SigninPage = () => {
     }
   };
 
+  const handleForgotPassword = async () => {
+
+    const email = document.querySelector(
+      'input[name="email"]'
+    )?.value;
+
+    if (!email) {
+
+      toast.error("Please enter your email first");
+
+      return;
+
+    }
+
+    try {
+
+      const { error } =
+        await authClient.forgetPassword({
+          email,
+          redirectTo:
+            `${process.env.NEXT_PUBLIC_API_URL}/reset-password`,
+        });
+
+      if (error) {
+
+        toast.error("Failed to send reset email");
+
+        return;
+
+      }
+
+      toast.success(
+        "Password reset email sent!"
+      );
+
+    } catch (err) {
+
+      console.error(err);
+
+      toast.error(
+        "Failed to send reset email"
+      );
+
+    }
+
+  };
+
   return (
 
     <div className="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-10 bg-gradient-to-br from-violet-50 via-white to-violet-100">
@@ -201,6 +248,18 @@ const SigninPage = () => {
 
             )}
 
+            <div className="flex justify-end mt-2">
+
+              <button
+                type="button"
+                onClick={handleForgotPassword}
+                className="text-sm text-violet-600 hover:underline"
+              >
+                Forgot Password?
+              </button>
+
+            </div>
+
           </div>
 
           {/* BUTTONS */}
@@ -231,7 +290,7 @@ const SigninPage = () => {
           {/* GOOGLE LOGIN */}
           <Button
             onClick={handleGoogleSignIn}
-            className="bg-white hover:bg-violet-50 text-black border border-violet-200 flex items-center justify-center gap-2 w-full py-2"
+            className="bg-white hover:bg-violet-50 text-black dark:text-white dark:hover:bg-gray-800 border border-violet-200 flex items-center justify-center gap-2 w-full py-2"
           >
 
             <FaGoogle className="text-violet-500" />
