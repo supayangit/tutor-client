@@ -444,9 +444,9 @@ const TutorDetailClientPage = ({ id }) => {
                         <button
                             type="submit"
                             disabled={bookingDisabled}
-                            className={`w-full py-4 rounded-2xl text-white font-bold text-lg transition-all duration-300 ${bookingDisabled
-                                ? "bg-gray-400 cursor-not-allowed"
-                                : "bg-violet-600 hover:bg-violet-700"
+                            className={`w-full py-4 rounded-2xl text-white dark:text-white font-bold text-lg transition-all duration-300 ${bookingDisabled
+                                ? "bg-gray-400 dark:bg-gray-600 cursor-not-allowed"
+                                : "bg-violet-600 dark:bg-violet-700 hover:bg-violet-700 dark:hover:bg-violet-800"
                                 }`}
                         >
                             {bookingDisabled
