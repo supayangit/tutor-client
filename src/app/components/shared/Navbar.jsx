@@ -4,7 +4,11 @@ import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-const Navbar = ({ mobile, session }) => {
+const Navbar = ({
+  mobile = false,
+  session,
+  closeMenu,
+}) => {
   const pathname = usePathname();
 
   const navItems = [
@@ -24,7 +28,7 @@ const Navbar = ({ mobile, session }) => {
     <nav
       className={
         mobile
-          ? "flex flex-col gap-5 mt-4 text-[15px] font-medium text-gray-700"
+          ? "flex flex-col gap-5 mt-4 text-[15px] font-medium text-gray-700 w-full"
           : "flex items-center gap-8 text-sm font-medium text-gray-700"
       }
     >
@@ -38,7 +42,12 @@ const Navbar = ({ mobile, session }) => {
           <Link
             key={item.href}
             href={item.href}
-            className={`transition duration-200 relative hover:text-violet-600 ${
+            onClick={() => {
+              if (mobile && closeMenu) {
+                closeMenu();
+              }
+            }}
+            className={`relative transition duration-200 hover:text-violet-600 w-fit ${
               isActive
                 ? "text-violet-700 font-semibold"
                 : "text-gray-700"

@@ -199,172 +199,159 @@ const MyTutorsPage = () => {
 
     return (
 
-        <div className="min-h-screen bg-gradient-to-br from-violet-50 via-white to-purple-50 py-14 px-4">
+        <div className="min-h-screen bg-gradient-to-br from-violet-50 via-white to-purple-50 py-10 sm:py-14 px-3 sm:px-4">
 
             <div className="max-w-7xl mx-auto">
 
                 {/* Header */}
-                <div className="text-center mb-12">
-
-                    <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+                <div className="text-center mb-10 sm:mb-12">
+                    <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-3 sm:mb-4">
                         My Tutors
                     </h1>
 
-                    <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+                    <p className="text-gray-600 text-base sm:text-lg max-w-2xl mx-auto">
                         Manage tutors you have created. Update your tutor information easily.
                     </p>
-
                 </div>
 
                 {/* Loading */}
                 {loading && (
-
-                    <div className="flex justify-center items-center py-20">
-
-                        <div className="w-14 h-14 border-4 border-violet-200 border-t-violet-600 rounded-full animate-spin"></div>
-
+                    <div className="flex justify-center items-center py-16 sm:py-20">
+                        <div className="w-12 h-12 sm:w-14 sm:h-14 border-4 border-violet-200 border-t-violet-600 rounded-full animate-spin"></div>
                     </div>
-
                 )}
 
                 {/* Empty State */}
                 {!loading && tutors.length === 0 && (
-
-                    <div className="text-center py-20 bg-white rounded-3xl border border-violet-100">
-
-                        <h2 className="text-2xl font-semibold text-gray-800 mb-3">
+                    <div className="text-center py-16 sm:py-20 bg-white rounded-2xl sm:rounded-3xl border border-violet-100 px-4">
+                        <h2 className="text-xl sm:text-2xl font-semibold text-gray-800 mb-2 sm:mb-3">
                             No Tutors Created Yet
                         </h2>
-
-                        <p className="text-gray-500">
+                        <p className="text-gray-500 text-sm sm:text-base">
                             Start by adding your first tutor profile.
                         </p>
-
                     </div>
-
                 )}
 
-                {/* Tutors Table */}
+                {/* TABLE (Desktop / Tablet) */}
                 {!loading && tutors.length > 0 && (
-
-                    <div className="overflow-x-auto bg-white rounded-3xl shadow-lg border border-violet-100">
-
-                        <table className="min-w-full">
+                    <div className="hidden sm:block overflow-x-auto bg-white rounded-2xl sm:rounded-3xl shadow-lg border border-violet-100">
+                        <table className="min-w-full text-sm sm:text-base">
 
                             <thead className="bg-violet-100">
-
                                 <tr>
-
-                                    <th className="px-6 py-4 text-left text-sm font-bold text-gray-700">
-                                        Photo
-                                    </th>
-
-                                    <th className="px-6 py-4 text-left text-sm font-bold text-gray-700">
-                                        Tutor Name
-                                    </th>
-
-                                    <th className="px-6 py-4 text-left text-sm font-bold text-gray-700">
-                                        Subject
-                                    </th>
-
-                                    <th className="px-6 py-4 text-left text-sm font-bold text-gray-700">
-                                        Teaching Mode
-                                    </th>
-
-                                    <th className="px-6 py-4 text-left text-sm font-bold text-gray-700">
-                                        Hourly Fee
-                                    </th>
-
-                                    <th className="px-6 py-4 text-left text-sm font-bold text-gray-700">
-                                        Actions
-                                    </th>
-
+                                    <th className="px-4 sm:px-6 py-3 sm:py-4 text-left font-bold text-gray-700">Photo</th>
+                                    <th className="px-4 sm:px-6 py-3 sm:py-4 text-left font-bold text-gray-700">Tutor Name</th>
+                                    <th className="px-4 sm:px-6 py-3 sm:py-4 text-left font-bold text-gray-700">Subject</th>
+                                    <th className="px-4 sm:px-6 py-3 sm:py-4 text-left font-bold text-gray-700">Mode</th>
+                                    <th className="px-4 sm:px-6 py-3 sm:py-4 text-left font-bold text-gray-700">Fee</th>
+                                    <th className="px-4 sm:px-6 py-3 sm:py-4 text-left font-bold text-gray-700">Actions</th>
                                 </tr>
-
                             </thead>
 
                             <tbody>
-
                                 {tutors.map((tutor, index) => (
-
                                     <tr
                                         key={tutor._id}
-                                        className={`border-t border-violet-50 ${index % 2 === 0
-                                            ? "bg-white"
-                                            : "bg-violet-50/40"
+                                        className={`border-t border-violet-50 ${index % 2 === 0 ? "bg-white" : "bg-violet-50/40"
                                             }`}
                                     >
-
-                                        {/* Photo */}
-                                        <td className="px-6 py-4">
-
+                                        <td className="px-4 sm:px-6 py-3 sm:py-4">
                                             <img
                                                 src={tutor.photo}
                                                 alt={tutor.tutorName}
-                                                className="w-16 h-16 rounded-2xl object-cover"
+                                                className="w-12 h-12 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl object-cover"
                                             />
-
                                         </td>
 
-                                        {/* Tutor Name */}
-                                        <td className="px-6 py-4 font-semibold text-gray-800">
+                                        <td className="px-4 sm:px-6 py-3 sm:py-4 font-semibold text-gray-800">
                                             {tutor.tutorName}
                                         </td>
 
-                                        {/* Subject */}
-                                        <td className="px-6 py-4 text-gray-600">
+                                        <td className="px-4 sm:px-6 py-3 sm:py-4 text-gray-600">
                                             {tutor.subject}
                                         </td>
 
-                                        {/* Teaching Mode */}
-                                        <td className="px-6 py-4 text-gray-600">
+                                        <td className="px-4 sm:px-6 py-3 sm:py-4 text-gray-600">
                                             {tutor.teachingMode}
                                         </td>
 
-                                        {/* Hourly Fee */}
-                                        <td className="px-6 py-4 font-bold text-violet-700">
+                                        <td className="px-4 sm:px-6 py-3 sm:py-4 font-bold text-violet-700">
                                             {tutor.hourlyFee}
                                         </td>
 
-                                        {/* Actions */}
-                                        {/* Actions */}
-                                        <td className="px-6 py-4">
-
-                                            <div className="flex items-center gap-3">
-
+                                        <td className="px-4 sm:px-6 py-3 sm:py-4">
+                                            <div className="flex flex-wrap gap-2 sm:gap-3">
                                                 <button
                                                     onClick={() => handleOpenModal(tutor)}
-                                                    className="px-5 py-2 rounded-xl bg-violet-600 hover:bg-violet-700 text-white transition"
+                                                    className="px-3 sm:px-5 py-2 rounded-lg sm:rounded-xl bg-violet-600 hover:bg-violet-700 text-white text-xs sm:text-sm"
                                                 >
                                                     Update
                                                 </button>
 
                                                 <button
                                                     onClick={() => handleDeleteClick(tutor)}
-                                                    className="px-5 py-2 rounded-xl bg-red-500 hover:bg-red-600 text-white transition"
+                                                    className="px-3 sm:px-5 py-2 rounded-lg sm:rounded-xl bg-red-500 hover:bg-red-600 text-white text-xs sm:text-sm"
                                                 >
                                                     Delete
                                                 </button>
-
                                             </div>
-
                                         </td>
-
                                     </tr>
-
                                 ))}
-
                             </tbody>
 
                         </table>
-
                     </div>
+                )}
 
+                {/* MOBILE CARD VIEW */}
+                {!loading && tutors.length > 0 && (
+                    <div className="sm:hidden space-y-4">
+                        {tutors.map((tutor) => (
+                            <div
+                                key={tutor._id}
+                                className="bg-white border border-violet-100 rounded-2xl p-4 shadow-sm"
+                            >
+                                <div className="flex items-center gap-3">
+                                    <img
+                                        src={tutor.photo}
+                                        className="w-14 h-14 rounded-xl object-cover"
+                                    />
+                                    <div>
+                                        <h3 className="font-semibold text-gray-900">
+                                            {tutor.tutorName}
+                                        </h3>
+                                        <p className="text-sm text-gray-500">{tutor.subject}</p>
+                                    </div>
+                                </div>
+
+                                <div className="mt-3 text-sm text-gray-600 space-y-1">
+                                    <p>Mode: {tutor.teachingMode}</p>
+                                    <p>Fee: <span className="font-bold text-violet-700">{tutor.hourlyFee}</span></p>
+                                </div>
+
+                                <div className="mt-4 flex gap-2">
+                                    <button
+                                        onClick={() => handleOpenModal(tutor)}
+                                        className="flex-1 py-2 bg-violet-600 text-white rounded-lg text-sm"
+                                    >
+                                        Update
+                                    </button>
+
+                                    <button
+                                        onClick={() => handleDeleteClick(tutor)}
+                                        className="flex-1 py-2 bg-red-500 text-white rounded-lg text-sm"
+                                    >
+                                        Delete
+                                    </button>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
                 )}
 
             </div>
-
-            {/* Update Modal */}
 
             {/* Delete Confirmation Modal */}
             {isDeleteModalOpen && (
