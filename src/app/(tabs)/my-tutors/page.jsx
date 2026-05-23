@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { authClient } from "@/lib/auth-client";
+import toast from "react-hot-toast";
 
 const MyTutorsPage = () => {
 
@@ -13,6 +14,8 @@ const MyTutorsPage = () => {
     // Modal State
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedTutor, setSelectedTutor] = useState(null);
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+    const [tutorToDelete, setTutorToDelete] = useState(null);
 
     // Form State
     const [formData, setFormData] = useState({
@@ -64,6 +67,54 @@ const MyTutorsPage = () => {
     }, [session]);
 
     // Open Update Modal
+    const handleDeleteClick = (tutor) => {
+
+        setTutorToDelete(tutor);
+
+        setIsDeleteModalOpen(true);
+
+    };
+
+    const confirmDeleteTutor = async () => {
+
+        try {
+
+            const res = await fetch(
+                `${process.env.NEXT_PUBLIC_API_URL}/tutors/${tutorToDelete._id}`,
+                {
+                    method: "DELETE",
+                }
+            );
+
+            const data = await res.json();
+
+            if (data.deletedCount > 0 || data.success) {
+
+                // remove instantly from UI
+                const remainingTutors = tutors.filter(
+                    (tutor) => tutor._id !== tutorToDelete._id
+                );
+
+                setTutors(remainingTutors);
+
+                setIsDeleteModalOpen(false);
+
+                setTutorToDelete(null);
+
+                toast.success("Tutor deleted successfully!");
+
+            }
+
+        } catch (error) {
+
+            console.error("Failed to delete tutor:", error);
+
+            toast.error("Failed to delete tutor");
+
+        }
+
+    };
+
     const handleOpenModal = (tutor) => {
 
         setSelectedTutor(tutor);
@@ -132,11 +183,15 @@ const MyTutorsPage = () => {
 
                 setIsModalOpen(false);
 
+                toast.success("Tutor updated successfully!");
+
             }
 
         } catch (error) {
 
             console.error("Failed to update tutor:", error);
+
+            toast.error("Failed to update tutor");
 
         }
 
@@ -235,8 +290,8 @@ const MyTutorsPage = () => {
                                     <tr
                                         key={tutor._id}
                                         className={`border-t border-violet-50 ${index % 2 === 0
-                                                ? "bg-white"
-                                                : "bg-violet-50/40"
+                                            ? "bg-white"
+                                            : "bg-violet-50/40"
                                             }`}
                                     >
 
@@ -272,14 +327,26 @@ const MyTutorsPage = () => {
                                         </td>
 
                                         {/* Actions */}
+                                        {/* Actions */}
                                         <td className="px-6 py-4">
 
-                                            <button
-                                                onClick={() => handleOpenModal(tutor)}
-                                                className="px-5 py-2 rounded-xl bg-violet-600 hover:bg-violet-700 text-white transition"
-                                            >
-                                                Update
-                                            </button>
+                                            <div className="flex items-center gap-3">
+
+                                                <button
+                                                    onClick={() => handleOpenModal(tutor)}
+                                                    className="px-5 py-2 rounded-xl bg-violet-600 hover:bg-violet-700 text-white transition"
+                                                >
+                                                    Update
+                                                </button>
+
+                                                <button
+                                                    onClick={() => handleDeleteClick(tutor)}
+                                                    className="px-5 py-2 rounded-xl bg-red-500 hover:bg-red-600 text-white transition"
+                                                >
+                                                    Delete
+                                                </button>
+
+                                            </div>
 
                                         </td>
 
@@ -298,6 +365,53 @@ const MyTutorsPage = () => {
             </div>
 
             {/* Update Modal */}
+
+            {/* Delete Confirmation Modal */}
+            {isDeleteModalOpen && (
+
+                <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4">
+
+                    <div className="bg-white w-full max-w-md rounded-3xl p-8 relative">
+
+                        <h2 className="text-2xl font-bold text-gray-900 mb-4">
+                            Delete Tutor
+                        </h2>
+
+                        <p className="text-gray-600 mb-8 leading-relaxed">
+                            Are you sure you want to delete{" "}
+                            <span className="font-semibold text-gray-900">
+                                {tutorToDelete?.tutorName}
+                            </span>
+                            ? This action cannot be undone.
+                        </p>
+
+                        <div className="flex items-center justify-end gap-4">
+
+                            <button
+                                onClick={() => {
+                                    setIsDeleteModalOpen(false);
+                                    setTutorToDelete(null);
+                                }}
+                                className="px-5 py-2 rounded-xl border border-gray-200 hover:bg-gray-100 transition"
+                            >
+                                Cancel
+                            </button>
+
+                            <button
+                                onClick={confirmDeleteTutor}
+                                className="px-5 py-2 rounded-xl bg-red-500 hover:bg-red-600 text-white transition"
+                            >
+                                Confirm Delete
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            )}
+
             {isModalOpen && (
 
                 <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4 overflow-y-auto">

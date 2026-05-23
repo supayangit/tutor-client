@@ -4,6 +4,7 @@ import TutorDetails from "@/app/components/tutor/TutorDetails";
 import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { BadgeCheck } from "lucide-react";
+import toast from "react-hot-toast";
 
 const TutorDetailsPage = () => {
 
@@ -165,6 +166,7 @@ const TutorDetailsPage = () => {
             setMessage(
                 "Booking is not available yet for this tutor"
             );
+            toast.error("Booking is not available yet for this tutor");
 
             setFormData((prev) => ({
                 ...prev,
@@ -196,6 +198,8 @@ const TutorDetailsPage = () => {
             const bookingResult = await bookingRes.json();
 
             if (bookingResult.insertedId) {
+
+                toast.success("Booking successful!");
 
                 // Decrease Slot by 1
                 const updatedSlot = Number(tutor.totalSlot) - 1;
@@ -234,6 +238,7 @@ const TutorDetailsPage = () => {
                     setMessage(
                         "This session is fully booked. You can’t join at the moment."
                     );
+                    toast.error("This session is fully booked.");
 
                     setFormData((prev) => ({
                         ...prev,
@@ -253,6 +258,7 @@ const TutorDetailsPage = () => {
             console.error(error);
 
             setMessage("Something went wrong!");
+            toast.error("Something went wrong while booking");
 
         }
 

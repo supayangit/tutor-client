@@ -74,7 +74,7 @@ const SigninPage = () => {
 
         {/* TITLE */}
         <h2 className="font-bold text-2xl text-center text-gray-900">
-          Sign In to LibriFlow
+          Sign In to MediQueue
         </h2>
 
         {/* SIGNUP LINK */}

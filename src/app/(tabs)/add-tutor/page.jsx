@@ -74,7 +74,10 @@ const AddTutorPage = () => {
 
       toast.success("Tutor created successfully!");
 
-      router.push("/tutors");
+      // wait 2 seconds before redirect
+      setTimeout(() => {
+        router.push("/tutors");
+      }, 2500);
 
     } catch (error) {
       console.error("Error creating tutor:", error);
